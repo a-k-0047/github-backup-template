@@ -1,0 +1,38 @@
+name: Backup Multiple GitHub Repos
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"  # Run every Monday 0:00 UTC
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Backup Repos
+        run: |
+          mkdir -p backup
+          # List of repositories to backup
+          for repo in \
+            https://github.com/your-username/repo1.git \
+            https://github.com/your-username/repo2.git \
+            https://github.com/your-username/repo3.git
+          do
+            reponame=$(basename $repo .git)
+            echo "Backing up $reponame..."
+            # Clone private repository using PAT
+            git clone --mirror https://${{ secrets.TOKEN_PAT_GITHUB }}@github.com/your-username/$reponame.git $reponame.git
+            # Create bundle file containing all branches and tags
+            bundlefile="${reponame}-$(date +'%Y%m%d').bundle"
+            git -C $reponame.git bundle create ../backup/$bundlefile --all
+            # Remove cloned repository to save space
+            rm -rf $reponame.git
+          done
+
+      - name: Upload to S3
+        run: |
+          aws s3 sync backup/ s3://your-bucket-name/github-backups/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-northeast-1
