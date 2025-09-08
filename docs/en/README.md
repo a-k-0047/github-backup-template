@@ -2,6 +2,16 @@
 
 This template allows you to backup multiple GitHub repositories (private/public) into `.bundle` files and upload them to AWS S3 using GitHub Actions.
 
+**What is backed up**
+- All commit history (including all branches and tags)
+- Branch and tag information
+- Remote configuration and reference information
+
+**What is not backed up**
+- History of Issues, Pull Requests, Projects, Discussions, and Actions
+- Wiki or static files hosted on GitHub Pages (requires separate export)
+- Repository settings (e.g., Branch Protection rules)
+
 **Note**: This workflow is intended to be used with **private repositories**.
 Scheduled workflows in public repositories may be automatically disabled if no repository activity occurs for 60 days, so use caution if applied to public repositories.
 
