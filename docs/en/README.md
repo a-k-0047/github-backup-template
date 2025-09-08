@@ -13,7 +13,9 @@ Reference: [Disabling and enabling a workflow](https://docs.github.com/en/action
    - Create a new S3 bucket in AWS for backups.
    - The bucket name will be used in the workflow YAML.
 2. **Create an IAM user**
-   - Create a backup IAM user and attach the following policy:
+   - Create a backup IAM user.
+   - Create an IAM user's Access Key ID and Secret Access Key.
+   - Attach the following policy:
     ```json
     {
         "Version": "2012-10-17",
@@ -33,19 +35,19 @@ Reference: [Disabling and enabling a workflow](https://docs.github.com/en/action
         ]
     }
     ```
+3. **Create a Personal Access Token (classic)**
+   - Login to GitHub
+   - Go to `Settings` of your profile → `Developer settings` → `Personal access tokens` → `Tokens (classic)` → `Generate new token`
+   - Select `repo` scope (Full control of private repositories)
 
-3. **Set GitHub Secrets**
-- Go to your repository → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`
-- Add the following secrets:
-  - `AWS_ACCESS_KEY_ID`: IAM user's Access Key ID
-  - `AWS_SECRET_ACCESS_KEY`: IAM user's Secret Access Key
-  - `TOKEN_PAT_GITHUB`: Personal Access Token (classic) with repo scope
-- How to create a PAT:
-  1. Login to GitHub
-  2. Go to `Settings` of your profile → `Developer settings` → `Personal access tokens` → `Tokens (classic)` → `Generate new token`
-  3. Select `repo` scope
+4. **Set GitHub Secrets**
+   - Go to your repository → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`
+   - Add the following secrets:
+     - `AWS_ACCESS_KEY_ID`: IAM user's Access Key ID
+     - `AWS_SECRET_ACCESS_KEY`: IAM user's Secret Access Key
+     - `TOKEN_PAT_GITHUB`: Personal Access Token (classic)
 
-1. **Update YAML**
+## Update YAML
 - Replace `your-username` with your GitHub username
 - Replace `your-bucket-name` with your S3 bucket name
 - List the repositories you want to backup

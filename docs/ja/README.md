@@ -13,7 +13,9 @@
    - バケット名は後で YAML 内で使用します。
 
 2. **IAM ユーザー作成**
-   - バックアップ用 IAM ユーザーを作成し、以下の権限を付与します:
+   - バックアップ用 IAM ユーザーを作成します。
+   - IAM ユーザーのアクセスキーID、シークレットキーを作成します。
+   - IAM ユーザーに以下の権限を付与します:
     ```json
     {
         "Version": "2012-10-17",
@@ -34,19 +36,22 @@
     }
     ```
 
-3. **GitHub Secrets の設定**
+3. **Personal Access Token (classic) の作成**
 
-- GitHub リポジトリ画面  → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`
-- 以下の Secrets を追加:
-  - `AWS_ACCESS_KEY_ID` : IAM ユーザーのアクセスキーID
-  - `AWS_SECRET_ACCESS_KEY` : IAM ユーザーのシークレットキー
-  - `TOKEN_PAT_GITHUB` : GitHub の Personal Access Token (classic)、スコープは repo (Full control of private repositories)
-- Personal Access Token の作成方法:
-  1. GitHub アカウントでログイン
-  2. プロフィールの`Settings` → `Developer settings` → `Personal access tokens` → `Tokens (classic)` → `Generate new token`
-  3. Scope に `repo` を選択
+   - GitHub アカウントでログイン
+   - プロフィールの`Settings` → `Developer settings` → `Personal access tokens` → `Tokens (classic)` → `Generate new token`
+   - Scope に `repo` (Full control of private repositories) を選択
 
-1. **YAML の設定変更**
+4. **GitHub Secrets の設定**
+
+   - GitHub リポジトリ画面  → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`
+   - 以下の Secrets を追加:
+     - `AWS_ACCESS_KEY_ID` : IAM ユーザーのアクセスキーID
+     - `AWS_SECRET_ACCESS_KEY` : IAM ユーザーのシークレットキー
+     - `TOKEN_PAT_GITHUB` : GitHub の Personal Access Token (classic)
+
+
+## YAML の設定変更
 - `your-username` を自分の GitHub アカウント名に変更
 - `your-bucket-name` を作成した S3 バケット名に変更
 - バックアップ対象のリポジトリ URL を列挙
