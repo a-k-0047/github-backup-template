@@ -61,7 +61,14 @@ Reference: [Disabling and enabling a workflow](https://docs.github.com/en/action
 - Replace `your-username` with your GitHub username
 - Replace `your-bucket-name` with your S3 bucket name
 - List the repositories you want to backup
-
+    ```yaml
+    # List of repositories to backup
+    for repo in \
+      https://github.com/your-username/repo1.git \
+      https://github.com/your-username/repo2.git \
+      https://github.com/your-username/repo3.git
+    do
+    ```
 ## Schedule change
 
 - Modify the `cron` value in YAML to change the workflow schedule

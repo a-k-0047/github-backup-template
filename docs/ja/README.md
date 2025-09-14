@@ -65,6 +65,14 @@
 - `your-username` を自分の GitHub アカウント名に変更
 - `your-bucket-name` を作成した S3 バケット名に変更
 - バックアップ対象のリポジトリ URL を列挙
+    ```yaml
+    # List of repositories to backup
+    for repo in \
+      https://github.com/your-username/repo1.git \
+      https://github.com/your-username/repo2.git \
+      https://github.com/your-username/repo3.git
+    do
+    ```
 
 ## 起動スケジュール変更方法
 
